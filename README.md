@@ -15,8 +15,13 @@ pip install -r requirements.txt
 To run quick smoke test to check if it runs or not. (first 2 index pages) you can change the index number as you wish
 
 ```
-python -m joss_repo_miner --status published \
-  --max-pages-published 2 --out results/published_sample.csv
+ pip install -e .    
+joss-repo-miner --status published --max-pages-published 2 --out results/published_sample.csv
+```
+
+To run it on all pages (all issues) use the following command 
+```
+joss-repo-miner --status accepted published --out results/joss_all.csv
 ```
 
 
