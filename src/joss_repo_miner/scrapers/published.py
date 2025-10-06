@@ -55,6 +55,7 @@ class PublishedScraper:
     def parse_paper(self, paper_url: str) -> Record:
         html = http_get(paper_url).text
         soup = BeautifulSoup(html, "html.parser")
+        repo_url = extract_repo_href(soup)
 
         title_el = soup.find("h1")
         title = clean_text(title_el.get_text(" ", strip=True)) if title_el else None
