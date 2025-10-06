@@ -10,7 +10,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
 
-
+```
 joss-repo-miner/
 ├─ .env
 ├─ requirements.txt
@@ -33,6 +33,6 @@ joss-repo-miner/
 ├─ LICENSE
 └─ .gitignore
 
-
+```
 
 
