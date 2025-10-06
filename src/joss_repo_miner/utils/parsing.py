@@ -1,4 +1,5 @@
 # src/joss_repo_miner/utils/parsing.py
+from typing import Optional
 from urllib.parse import urlparse
 
 CODE_HOSTS = ("github.com", "gitlab.com", "codeberg.org", "bitbucket.org")
@@ -17,7 +18,7 @@ def is_repo_like(href: str) -> bool:
     except Exception:
         return False
 
-def extract_repo_href(soup) -> str | None:
+def extract_repo_href(soup) -> Optional[str]:
     # (1) Button area (most reliable)
     for sel in [
         "a.paper-btn[href]",                      # JOSS button class
