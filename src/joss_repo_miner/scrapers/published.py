@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 from ..config import BASE_JOSS
 from ..utils.http import http_get
-from ..utils.parsing import clean_text, DOI_RE, first_repo_link_from_text
+from ..utils.parsing import clean_text, DOI_RE, extract_repo_href
 from ..utils.io import Record
 
 class PublishedScraper:
@@ -68,7 +68,7 @@ class PublishedScraper:
         if btn and btn.has_attr("href"):
             repo_url = btn["href"]
         if not repo_url:
-            repo_url = first_repo_link_from_text(html)
+            repo_url = extract_repo_href(html)
 
         return Record(
             status="published",
