@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "joss-repo-miner"
+version = "0.1.0"
+description = "Command-line tool to scrape accepted and published JOSS repositories into CSV."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "requests>=2.31,<3",
+  "beautifulsoup4>=4.12,<5",
+  "python-dotenv>=1.0,<2",
+]
+
+[project.scripts]
+joss-repo-miner = "joss_repo_miner.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
