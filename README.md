@@ -5,10 +5,22 @@ python 3.9.6 was used to create this repository.
 
 Usage:
 
+```
 python3 -m venv .venv && source .venv/bin/activate
 
 pip install -r requirements.txt
 
+```
+
+To run quick smoke test to check if it runs or not. (first 2 index pages) you can change the index number as you wish
+
+```
+python -m joss_repo_miner --status published \
+  --max-pages-published 2 --out results/published_sample.csv
+```
+
+
+Project Structure:
 
 ```
 joss-repo-miner/
@@ -35,4 +47,5 @@ joss-repo-miner/
 
 ```
 
+requirements.txt is generated using pipreqs. 
 
