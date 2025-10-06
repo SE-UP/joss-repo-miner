@@ -1,7 +1,7 @@
 # joss-repo-miner
 Command-line tool to scrape accepted and published JOSS repositories into CSV.
 
-python 3.9.6 was used to create this repository. 
+python 3.9.6 was used to create this repository. So be mindful that (str | None (PEP 604) isn’t supported)
 
 Usage:
 
