@@ -20,35 +20,62 @@ class PublishedScraper:
         page = 1
         while True:
             url = f"{BASE_JOSS}/papers/published?page={page}"
-            soup = BeautifulSoup(http_get(url).text, "html.parser")
-            links = [urljoin(BASE_JOSS, a.get("href", "")) for a in soup.select("a[href^='/papers/10.21105/joss.']")]
-            if not links: break
+            resp = http_get(url)
+            text = resp.text
+            ctype = (resp.headers.get("Content-Type") or "").lower()
+
+            # Detect Atom/XML vs HTML
+            if "xml" in ctype or text.lstrip().startswith("<?xml"):
+                soup = BeautifulSoup(text, "lxml-xml")  # requires lxml
+                hrefs = [tag.get("href", "") for tag in soup.find_all("link")]
+                links = [h for h in hrefs if "/papers/10.21105/joss." in h]
+            else:
+                soup = BeautifulSoup(text, "html.parser")
+                links = [
+                    urljoin(BASE_JOSS, a.get("href", ""))
+                    for a in soup.select("a[href^='/papers/10.21105/joss.']")
+                ]
+
+            if not links:
+                break
+
             new = 0
             for u in links:
-                if u not in seen:
-                    seen.add(u); new += 1
+                if u and u not in seen:
+                    seen.add(u)
+                    new += 1
                     yield u
+
             if (max_pages and page >= max_pages) or new == 0:
                 break
-            page += 1; time.sleep(self.polite)
+
+            page += 1
+            time.sleep(self.polite)
 
     def parse_paper(self, paper_url: str) -> Record:
         html = http_get(paper_url).text
         soup = BeautifulSoup(html, "html.parser")
+
         title_el = soup.find("h1")
         title = clean_text(title_el.get_text(" ", strip=True)) if title_el else None
         m = DOI_RE.search(paper_url) or DOI_RE.search(html)
         doi = f"10.21105/joss.{m.group(1)}" if m else None
         joss_id = m.group(1) if m else None
 
+        # Prefer explicit repository button; fall back to first code-host link
         repo_url: Optional[str] = None
-        btn = soup.find("a", string=lambda s: s and ("Software repository" in s or "Repository" in s))
+        btn = soup.find("a", string=lambda s: isinstance(s, str) and "Software repository" in s)
         if btn and btn.has_attr("href"):
             repo_url = btn["href"]
         if not repo_url:
             repo_url = first_repo_link_from_text(html)
 
         return Record(
-            status="published", paper_url=paper_url, issue_url=None,
-            doi=doi, joss_id=joss_id, title=title, repo_url=repo_url
+            status="published",
+            paper_url=paper_url,
+            issue_url=None,
+            doi=doi,
+            joss_id=joss_id,
+            title=title,
+            repo_url=repo_url,
         )
