@@ -19,6 +19,9 @@ To run quick smoke test to check if it runs or not. (first 2 index pages) you ca
 joss-repo-miner --status published --max-pages-published 2 --out results/published_sample.csv
 ```
 
+Before running the scripts to get all published repositories make sure you have your github token in .env How to do it. 
+
+
 To run it on all pages (all issues) use the following command 
 ```
 joss-repo-miner --status accepted published --out results/joss_all.csv
@@ -54,3 +57,31 @@ joss-repo-miner/
 
 requirements.txt is generated using pipreqs. 
 
+
+
+
+
+To be included in github tokens
+
+### Generate and use a GitHub token (classic)
+
+**1) Create a new token (classic)**  
+GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → **Generate new token (classic)**  
+*(No scopes needed for public data; optionally add `public_repo`.)*
+
+**2) Save to `.env` (no quotes, no spaces)**  
+    GITHUB_TOKEN=YOUR_TOKEN_HERE
+    GITHUB_USERNAME=YourGitHubUser
+
+**3) Load and verify in your shell**  
+    set -a
+    source .env
+    set +a
+
+    # sanity-check it loaded
+    echo ${#GITHUB_TOKEN}               # should be > 0
+    echo "${GITHUB_TOKEN:0:6}******"
+
+    # test both header styles
+    curl -sH "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/rate_limit | head
+    curl -sH "Authorization: token $GITHUB_TOKEN"  https://api.github.com/rate_limit | head
