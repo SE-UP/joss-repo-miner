@@ -18,7 +18,7 @@ class CsvWriter:
     """Write directly to the final CSV (no checkpoints)."""
     def __init__(self, out_file: str, checkpoint_every: int = 0):  # arg kept but ignored
         self.out_file = out_file
-        self.fieldnames = ["status","paper_url","issue_url","doi","joss_id","title","repo_url"]
+        self.fieldnames = ["status","paper_url","doi","title","repo_url"]
         # fresh file with header
         with open(self.out_file, "w", newline="", encoding="utf-8") as f:
             csv.DictWriter(f, fieldnames=self.fieldnames).writeheader()
