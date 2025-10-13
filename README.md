@@ -34,6 +34,12 @@ Project Structure:
 joss-repo-miner/
 ├─ .env
 ├─ requirements.txt
+├─ tests/
+│  └─ unit/
+│     ├─ utils/
+│        ├─ test_http.py
+│        ├─ test_io.py
+│        └─ test_parsing.py
 ├─ src/
 │  └─ joss_repo_miner/
 │     ├─ __init__.py
@@ -52,6 +58,7 @@ joss-repo-miner/
 ├─ results/
 ├─ LICENSE
 └─ .gitignore
+
 
 ```
 
