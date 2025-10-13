@@ -38,8 +38,7 @@ joss-repo-miner/
 │  └─ unit/
 │     ├─ utils/
 │        ├─ test_http.py
-│        ├─ test_io.py
-│        └─ test_parsing.py
+│        └─ test_io.py
 ├─ src/
 │  └─ joss_repo_miner/
 │     ├─ __init__.py
