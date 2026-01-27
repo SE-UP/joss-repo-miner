@@ -3,9 +3,9 @@ import pytest
 import responses
 from datetime import datetime, timezone
 
-from src.joss_repo_miner.utils.http import http_get
-import src.joss_repo_miner.utils.http as http_mod
-from src.joss_repo_miner.utils.io import CsvWriter, Record
+from joss_repo_miner.utils.http import http_get
+import joss_repo_miner.utils.http as http_mod
+from joss_repo_miner.utils.io import CsvWriter, Record
 
 def read_rows(path):
     with open(path, newline="", encoding="utf-8") as f:
