@@ -7,7 +7,7 @@ import responses
 
 # Import the module under test
 # adjust the import path to match your project structure
-from src.joss_repo_miner.utils import http as http_mod
+from joss_repo_miner.utils import http as http_mod
 
 @pytest.fixture(autouse=True)
 def patch_constants(monkeypatch):

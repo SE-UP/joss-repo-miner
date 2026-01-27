@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 import os
 import pytest
 
-from src.joss_repo_miner.utils.io import _to_ddmmyyyy, CsvWriter, Record
+from joss_repo_miner.utils.io import _to_ddmmyyyy, CsvWriter, Record
 
 # ---------- _to_ddmmyyyy ----------
 
