@@ -19,7 +19,7 @@ class PublishedScraper:
         seen: Set[str] = set()
         page = 1
         while True:
-            print(f"Scaping page {page}/{max_pages}")
+            print(f"Scraping page {page}/{max_pages}")
             url = f"{BASE_JOSS}/papers/published?page={page}"
             resp = http_get(url)
             text = resp.text
