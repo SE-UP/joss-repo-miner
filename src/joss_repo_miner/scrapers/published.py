@@ -19,6 +19,7 @@ class PublishedScraper:
         seen: Set[str] = set()
         page = 1
         while True:
+            print(f"Scraping page {page}/{max_pages}")
             url = f"{BASE_JOSS}/papers/published?page={page}"
             resp = http_get(url)
             text = resp.text
@@ -71,6 +72,9 @@ class PublishedScraper:
         if not repo_url:
             repo_url = extract_repo_href(html)
 
+        # Check if the repository is accessible
+        status_code = http_get(repo_url).status_code
+
         return Record(
             status="published",
             paper_url=paper_url,
@@ -79,4 +83,5 @@ class PublishedScraper:
             joss_id=joss_id,
             title=title,
             repo_url=repo_url,
+            repo_status_code=status_code
         )
