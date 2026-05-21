@@ -1,34 +1,7 @@
 # joss-repo-miner
-Command-line tool to scrape accepted and published JOSS repositories into CSV.
+Command-line tool to scrape published JOSS repositories into CSV.
 
-python 3.9.6 was used to create this repository. So be mindful that (str | None (PEP 604) isn’t supported)
-
-Usage:
-
-```
-python3 -m venv .venv && source .venv/bin/activate
-
-pip install -r requirements.txt
-
-```
-
-To run quick smoke test to check if it runs or not. (first 2 index pages) you can change the index number as you wish
-
-```
- pip install -e .    
-joss-repo-miner --status published --max-pages-published 2 --out results/published_sample.csv
-```
-
-Before running the scripts to get all published repositories make sure you have your github token in .env How to do it. 
-
-
-To run it on all pages (all issues) use the following command 
-```
-joss-repo-miner --status accepted published --out results/joss_all.csv
-```
-
-
-Project Structure:
+* **Project Structure**
 
 ```
 joss-repo-miner/
@@ -61,38 +34,39 @@ joss-repo-miner/
 
 ```
 
-requirements.txt is generated using pipreqs. 
+**Usage:**
 
+* **[Step:1]** Creating a virtual environment. 
 
+**1.1:** Create a .venv using following command.
+```   
+python3 -m venv venv
+```   
 
+ **1.2:** Activate it (macOS/Linux).
+```   
+source venv/bin/activate 
+```   
 
+**[At the end]** Deactivate it when done. 
+``` 
+deactivate
+```   
+* **[Step:2]** Installing dependencies
 
-To be included in github tokens
+**2.1:** We used pipreqs to create requirements.txt file given this repository contains only the code 
+You can install requirements.txt using the below 
+```   
+pip install -r requirements.txt
+```   
+* **[Step:3]** Install and run.
 
-### Generate and use a GitHub token (classic)
-
-**1) Create a new token (classic)**  
-GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → **Generate new token (classic)**  
-*(No scopes needed for public data; optionally add `public_repo`.)*
-
-**2) Save to `.env` (no quotes, no spaces)**  
-
-```    
-GITHUB_TOKEN=YOUR_TOKEN_HERE
-GITHUB_USERNAME=YourGitHubUser
+To run quick smoke test to check if it runs or not. (first 2 index pages) you can change the index number as you wish
 ```
-
-**3) Load and verify in your shell**  
-```    
-set -a
-source .env
-set +a
-
-# sanity-check it loaded
-echo ${#GITHUB_TOKEN}               # should be > 0
-echo "${GITHUB_TOKEN:0:6}******"
-
-# test both header styles
-curl -sH "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/rate_limit | head
-curl -sH "Authorization: token $GITHUB_TOKEN"  https://api.github.com/rate_limit | head
+ pip install -e .    
+joss-repo-miner --status published --max-pages-published 2 --out results/published_sample.csv
+```
+Use the following command to make the full run: 
+```
+joss-repo-miner --status published --out results/joss_all.csv
 ```
