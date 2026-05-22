@@ -1,4 +1,11 @@
 # src/joss_repo_miner/scrapers/published.py
+"""Scraper implementations targeting officially published JOSS papers.
+
+This module provides the PublishedScraper class which handles crawling through
+the public JOSS website, dynamically processes index responses (supporting both 
+traditional HTML pages and XML/Atom feed formats), and extracts full paper metadata.
+"""
+
 from __future__ import annotations
 import time
 from typing import Iterable, Set, Optional
@@ -13,9 +20,28 @@ from ..utils.io import Record
 class PublishedScraper:
     """Scrape JOSS 'Published' index and paper pages."""
     def __init__(self, politeness_sleep: float = 0.7):
+        """Initializes the scraper context with execution pacing details.
+
+        Args:
+            politeness_sleep (float): Seconds to sleep between page network requests.
+
+        Returns:
+            None
+        """
         self.polite = politeness_sleep
 
     def iter_paper_urls(self, max_pages: int = 0) -> Iterable[str]:
+        """Crawls and reads paginated indices to discover valid JOSS paper links.
+
+        Detects whether incoming feeds are serving structured XML payloads or
+        traditional markup layouts, filters out unique matches, and yields items.
+
+        Args:
+            max_pages (int): Upper bound limit of index page intervals to harvest (0 = all).
+
+        Yields:
+            str: Discovered absolute URLs pointing to detailed individual paper logs.
+        """
         seen: Set[str] = set()
         page = 1
         while True:
@@ -54,6 +80,17 @@ class PublishedScraper:
             time.sleep(self.polite)
 
     def parse_paper(self, paper_url: str) -> Record:
+        """Parses a published JOSS paper page to collect structured tracking tokens.
+
+        Isolates document object properties like title headers, internal DOIs, 
+        explicit repository nodes, and verifies endpoint routing availability.
+
+        Args:
+            paper_url (str): Absolute network link corresponding to the target paper.
+
+        Returns:
+            Record: A structured metadata dataset container instance.
+        """
         html = http_get(paper_url).text
         soup = BeautifulSoup(html, "html.parser")
         repo_url = extract_repo_href(soup)
