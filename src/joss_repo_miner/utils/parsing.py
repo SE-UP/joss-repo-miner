@@ -1,4 +1,11 @@
 # src/joss_repo_miner/utils/parsing.py
+"""
+
+This module provides helper functions and regular expressions to clean string content,
+validate repository-like structure for crawled hyperlinks, parse HTML targets via
+BeautifulSoup, and resolve explicit software repositories linked inside JOSS paper entries.
+"""
+
 from __future__ import annotations
 
 import re
@@ -14,17 +21,43 @@ TRAILING_JUNK = ").,;\"'>*"
 # Block these owners (avoid org/home links like github.com/openjournals/joss)
 BLOCKED_OWNERS = {"openjournals", "joss"}
 
+
 def clean_text(s: Optional[str]) -> Optional[str]:
+    """Replaces all contiguous whitespace segments with a single space and strips whitespace.
+
+    Args:
+        s (Optional[str]): The raw input string text to be cleaned.
+
+    Returns:
+        Optional[str]: The normalized and trimmed string, or None if the input was empty or None.
+    """
     return None if not s else WS.sub(" ", s).strip()
 
+
 def _normalize_host(host: str) -> str:
+    """Standardizes a URL host string to lower-case and strips common subdomains.
+
+    Args:
+        host (str): The raw server domain string extracted from a URL.
+
+    Returns:
+        str: The normalized, lowercase host string with leading 'www.' prefixes removed.
+    """
     host = (host or "").strip().lower()
     if host.startswith("www."):
         host = host[4:]
     return host
 
+
 def _sanitize_href(href: str) -> str:
-    """Strip trailing punctuation, query/fragment, keep scheme/host/path."""
+    """Strip trailing punctuation, query/fragment, keep scheme/host/path.
+
+    Args:
+        href (str): The target raw URL string to sanitize.
+
+    Returns:
+        str: A clean URL text sequence retaining only the scheme, netloc, and path.
+    """
     href = (href or "").strip().rstrip(TRAILING_JUNK)
     try:
         u = urlparse(href)
@@ -33,13 +66,21 @@ def _sanitize_href(href: str) -> str:
     except Exception:
         return href
 
+
 def is_repo_like(href: str) -> bool:
-    """
-    Accept ANY host as long as:
+    """Accept ANY host as long as:
+
       - scheme is http/https
       - path looks like owner/repo (>=2 segments)
       - OR it's a special forge where project pages (>=1 segment) are OK
       - first path segment (owner) is not in BLOCKED_OWNERS
+
+    Args:
+        href (str): The raw hyperlink string to analyze.
+
+    Returns:
+        bool: True if the structural format resembles a codebase repository target,
+        False otherwise.
     """
     try:
         href = _sanitize_href(href)
@@ -74,10 +115,18 @@ def is_repo_like(href: str) -> bool:
     except Exception:
         return False
 
+
 def first_repo_link_from_text(text: str) -> Optional[str]:
-    """
-    Very loose fallback: first URL-looking thing in text that passes is_repo_like().
+    """Very loose fallback: first URL-looking thing in text that passes is_repo_like().
+
     (Generic URL regex; not limited to specific hosts.)
+
+    Args:
+        text (str): The raw plain-text payload string searched for URLs.
+
+    Returns:
+        Optional[str]: The first valid repository string match discovered,
+        or None if no match passes structural tests.
     """
     m = re.search(r"https?://[^\s)>\"]+", text or "", re.I)
     if not m:
@@ -85,15 +134,24 @@ def first_repo_link_from_text(text: str) -> Optional[str]:
     href = _sanitize_href(m.group(0))
     return href if is_repo_like(href) else None
 
+
 def extract_repo_href(doc: Any) -> Optional[str]:
-    """
-    Extract most likely repo URL from a JOSS paper page.
+    """Extract most likely repo URL from a JOSS paper page.
+
     Accepts a BeautifulSoup object or an HTML string.
 
     Strategy:
       1) <a> whose text mentions 'repository'
       2) <dt>/<th> 'Repository' → next <dd>/<td> link
       3) First acceptable link by is_repo_like()
+
+    Args:
+        doc (Any): An instantiated BeautifulSoup tree model or a raw text
+            markup representation of the JOSS target page.
+
+    Returns:
+        Optional[str]: The parsed target repository link, or None if matching
+        strategies fail to extract a compliant repository layout structure.
     """
     soup = doc if hasattr(doc, "find_all") else BeautifulSoup(doc or "", "html.parser")
 
