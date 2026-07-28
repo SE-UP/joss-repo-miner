@@ -1,0 +1,673 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-47852178-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-47852178-4');
+  </script>
+  
+  <title>Journal of Open Source Software</title>
+  <link rel="stylesheet" href="/assets/application-f79ecdb22353135f7016bd9cc4a598c5f774ed8cde8a0c0e65e58df6acfe87f4.css" media="all" />
+  <script type="importmap" data-turbo-track="reload">{
+  "imports": {
+    "application": "/assets/application-df5a46b91e72d278d5a7a1cd9443f0dc2cca3910d86834bc36bd5184c8281bc9.js",
+    "@hotwired/turbo-rails": "/assets/turbo.min-b86d83036ff04169e5bf3ebbc82e0ad528456259e47091b448f41a3cadabdb40.js",
+    "@hotwired/stimulus": "/assets/stimulus.min-dd364f16ec9504dfb72672295637a1c8838773b01c0b441bd41008124c407894.js",
+    "@hotwired/stimulus-loading": "/assets/stimulus-loading-3576ce92b149ad5d6959438c6f291e2426c86df3b874c525b30faad51b0d96b3.js",
+    "chartkick": "/assets/chartkick-8eb76e6cbdb540d495739fce84049fd038e59e7fd55c9e08e47b0b5a74b62db4.js",
+    "Chart.bundle": "/assets/Chart.bundle-f9da773cb982870fc03e616b7bcbfcc56462d3b0188cd9e441f8d8398c7e9482.js",
+    "jquery": "https://ga.jspm.io/npm:jquery@3.6.0/dist/jquery.js",
+    "jquery-ujs": "https://ga.jspm.io/npm:jquery-ujs@1.2.3/src/rails.js",
+    "bootstrap": "https://ga.jspm.io/npm:bootstrap@4.3.1/dist/js/bootstrap.js",
+    "popper.js": "https://ga.jspm.io/npm:popper.js@1.16.1/dist/umd/popper.js",
+    "stimulus-autocomplete": "https://ga.jspm.io/npm:stimulus-autocomplete@3.0.2/src/autocomplete.js",
+    "controllers/application": "/assets/controllers/application-be831a1b6a870183a0658d3e9c13c6da218a1234275567dff4eefef7f7775b81.js",
+    "controllers": "/assets/controllers/index-2db729dddcc5b979110e98de4b6720f83f91a123172e87281d5a58410fc43806.js",
+    "custom/clipboards": "/assets/custom/clipboards-48e2c73c8ef9808e78c861d052caddbed05a0f81ac9f4f8aaaa8090bcfa76c6b.js",
+    "custom/editors": "/assets/custom/editors-2e61a0aab32b84eb5eeae0d0067bd2b49ed1983d97e2eeec51363b698541e8b8.js",
+    "custom/home": "/assets/custom/home-0b2de9e6deaba03f8cae782e1c1437dc0b2bb6a39cad38d5f690565f8203a915.js",
+    "custom/loading_jquery": "/assets/custom/loading_jquery-d236c90c9cc902cd6a766deccda5187a1d0fdd60385d6e7f9ead103d82252a60.js",
+    "custom/papers": "/assets/custom/papers-ce601133df30d3d1e0b730c63030931b8113c83e98cc9f751a13a0d2655d86a8.js",
+    "custom/sortable": "/assets/custom/sortable-1a1bd1a9b51409ff79f27d466bf8d3cfb3bd7403bb2b29b67eb17b861dc61718.js",
+    "custom/transitions": "/assets/custom/transitions-1af839d3603dbc483aef21c4da58ceaa823018620db771eb05c7be268c125261.js"
+  }
+}</script>
+<link rel="modulepreload" href="/assets/application-df5a46b91e72d278d5a7a1cd9443f0dc2cca3910d86834bc36bd5184c8281bc9.js">
+<link rel="modulepreload" href="/assets/turbo.min-b86d83036ff04169e5bf3ebbc82e0ad528456259e47091b448f41a3cadabdb40.js">
+<link rel="modulepreload" href="/assets/stimulus.min-dd364f16ec9504dfb72672295637a1c8838773b01c0b441bd41008124c407894.js">
+<link rel="modulepreload" href="/assets/stimulus-loading-3576ce92b149ad5d6959438c6f291e2426c86df3b874c525b30faad51b0d96b3.js">
+<link rel="modulepreload" href="/assets/chartkick-8eb76e6cbdb540d495739fce84049fd038e59e7fd55c9e08e47b0b5a74b62db4.js">
+<link rel="modulepreload" href="/assets/Chart.bundle-f9da773cb982870fc03e616b7bcbfcc56462d3b0188cd9e441f8d8398c7e9482.js">
+<link rel="modulepreload" href="https://ga.jspm.io/npm:jquery@3.6.0/dist/jquery.js">
+<link rel="modulepreload" href="https://ga.jspm.io/npm:jquery-ujs@1.2.3/src/rails.js">
+<link rel="modulepreload" href="https://ga.jspm.io/npm:bootstrap@4.3.1/dist/js/bootstrap.js">
+<link rel="modulepreload" href="https://ga.jspm.io/npm:popper.js@1.16.1/dist/umd/popper.js">
+<link rel="modulepreload" href="https://ga.jspm.io/npm:stimulus-autocomplete@3.0.2/src/autocomplete.js">
+<link rel="modulepreload" href="/assets/controllers/application-be831a1b6a870183a0658d3e9c13c6da218a1234275567dff4eefef7f7775b81.js">
+<link rel="modulepreload" href="/assets/controllers/index-2db729dddcc5b979110e98de4b6720f83f91a123172e87281d5a58410fc43806.js">
+<link rel="modulepreload" href="/assets/custom/clipboards-48e2c73c8ef9808e78c861d052caddbed05a0f81ac9f4f8aaaa8090bcfa76c6b.js">
+<link rel="modulepreload" href="/assets/custom/editors-2e61a0aab32b84eb5eeae0d0067bd2b49ed1983d97e2eeec51363b698541e8b8.js">
+<link rel="modulepreload" href="/assets/custom/home-0b2de9e6deaba03f8cae782e1c1437dc0b2bb6a39cad38d5f690565f8203a915.js">
+<link rel="modulepreload" href="/assets/custom/loading_jquery-d236c90c9cc902cd6a766deccda5187a1d0fdd60385d6e7f9ead103d82252a60.js">
+<link rel="modulepreload" href="/assets/custom/papers-ce601133df30d3d1e0b730c63030931b8113c83e98cc9f751a13a0d2655d86a8.js">
+<link rel="modulepreload" href="/assets/custom/sortable-1a1bd1a9b51409ff79f27d466bf8d3cfb3bd7403bb2b29b67eb17b861dc61718.js">
+<link rel="modulepreload" href="/assets/custom/transitions-1af839d3603dbc483aef21c4da58ceaa823018620db771eb05c7be268c125261.js">
+<script type="module">import "application"</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="PcJHbejdEA-7TMEZ_ELJRiG1N42u_-s_g92nvhU5hiRq4B1jRsHgraTiT-m76gM-kzzpnu04RHbwhzI9WC84AA" />
+
+  <!-- Atom feeds -->
+  <link rel="alternate" type="application/atom+xml" title="Journal of Open Source Software: All papers"
+    href="https://joss.theoj.org/papers.atom">
+  <link rel="alternate" type="application/atom+xml" title="Journal of Open Source Software: Accepted papers"
+    href="https://joss.theoj.org/papers/published.atom">
+  <link rel="alternate" type="application/atom+xml" title="Journal of Open Source Software: In progress papers"
+    href="https://joss.theoj.org/papers/active.atom">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="home" type="application/atom+xml" title="Papers" href="/papers.atom">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- facebook open graph tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://joss.theoj.org" />
+  <meta property="og:title" content="Journal of Open Source Software" />
+  <meta property="og:description" content="Journal of Open Source Software (JOSS) is a developer friendly, open access journal for research software packages." />
+  <meta property="og:image" content="https://joss.theoj.org/logo_large.jpg" />
+
+  <!-- twitter card tags additive with the og: tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" value="Journal of Open Source Software" />
+  <meta name="twitter:site" content="">
+  <meta name="twitter:description" value="Journal of Open Source Software (JOSS) is a developer friendly, open access journal for research software packages." />
+  <meta name="twitter:image" content="https://joss.theoj.org/logo_large.jpg" />
+  <meta name="twitter:url" value="https://joss.theoj.org" />
+  <meta name="twitter:label1" value="ISSN" />
+  <meta name="twitter:data1" value="2475-9066" />
+</head>
+
+<body>
+  <header class="container-fluid">
+    <nav class="navbar navbar-expand-lg">
+
+  <a class="navbar-brand" href="/">
+    <img src="/assets/logo_medium-5f8ee81bd1f2a8d84c42254f1addc510aad3b4acd4242be8cf69c2f860b1704e.png" width="48" height="48" />
+    <img src="/assets/joss-3941a7301703d0bb0ca6eb564b9856ccf41d2452909d7404c83fc589e68e5ee7.svg" />
+  </a>
+
+  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto">
+
+
+
+      <a class="nav-item nav-link" href="/about">About</a>
+      <a class="nav-item nav-link active" aria-current="page" href="/papers/published">Papers</a>
+      <a target="_blank" class="nav-item nav-link" href="https://joss.readthedocs.io/en/latest/index.html">Docs</a>
+      <a class="nav-item nav-link" href="http://blog.joss.theoj.org/">Blog</a>
+      <a class="nav-item nav-link" href="/papers/new">Submit</a>
+      <form class="button_to" method="post" action="/auth/orcid"><button class="nav-item nav-link btn orcid" data-turbo="false" type="submit">Log in with ORCID</button><input type="hidden" name="authenticity_token" value="WYwz77MXst0uGByC7hqxLs4tqyQiEab6nmrtlllzFycUpZH2QaYv7eeuD6jruZWUBIxx9KPgrzYLk8VL274qFg" autocomplete="off" /></form>
+      <a target="_blank" class="nav-item nav-link" href="https://github.com/openjournals/joss"><img src="/assets/github-602a2a727b721fb4f2162df06888f580f65cdc14cdc2dfd7c82f3cbb44e07f41.svg" /></a>
+    </div>
+
+    <div class="rss-dropdown dropdown">
+      <a class="dropdown-toggle" size="48" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><img src="/assets/rss-sm-9288eaac3970144f8632d608dce86b4c008ead8e14e74dfd6d9fbbb2cd16877d.svg" /></a>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+        
+        <a class="dropdown-item" href="/papers/active.atom">Active Papers</a>
+        <a class="dropdown-item" href="/papers/published.atom">Published Papers</a>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+  </header>
+
+
+  <div class="container">
+    <div id="flash-message-wrapper">
+      
+
+
+    </div>
+    
+    <div class="alert alert-info scope-update-banner" role="alert" id="scope-update-banner">
+  <div class="container">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="dismissScopeBanner()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Important Update:</strong> JOSS has updated its submission scope requirements, affecting what is eligible for submission and what information is required in your paper.
+    <a target="_blank" class="alert-link" href="https://blog.joss.theoj.org/2026/01/preparing-joss-for-a-generative-ai-future">Read the announcement &rarr;</a> • 
+    <a target="_blank" class="alert-link" href="https://joss.readthedocs.io/en/latest/submitting.html#scope-and-significance">View updated requirements &rarr;</a>
+  </div>
+</div>
+
+<script>
+function dismissScopeBanner() {
+  document.cookie = "scope_banner_dismissed=true; max-age=2592000; path=/"; // 30 days
+  document.getElementById('scope-update-banner').style.display = 'none';
+}
+</script>
+
+  </div>
+
+  <div class="container papers-hero">
+  <div class="hero-small">
+    <div class="hero-title">
+      <img height="32px" src="/assets/icon_papers-0b16285f3292d284b4bd91da5ea757f5233236ccdfa73a5b4a45793c684748a1.svg" /><h1>JOSS Papers</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="paper-header">
+    <div class="btn-group" role="group" aria-label="Paper Status">
+
+      <a class="tabnav-tab " href="/papers">
+        <span class="count-label">All Papers</span>
+        <div class="count-badge">4065</div>
+</a>      <a class="tabnav-tab selected" href="/papers/published">
+        <span class="count-label">Published Papers</span>
+        <div class="count-badge">3641</div>
+</a>      <a class="tabnav-tab " href="/papers/active">
+        <span class="count-label">Active Papers</span>
+        <div class="count-badge">424</div>
+</a>    </div>
+
+    <form class="form-inline my-2 my-lg-0 float-right" action="/papers/search" accept-charset="UTF-8" method="get">
+    <div class="input-group mb-3">
+      <input placeholder="Search by title, tag, author, or language" class="form-control" size="35" type="text" name="q" id="q" />
+      <div class="input-group-append">
+        <button name="search_button" type="submit" class="btn btn-outline-secondary">
+          <svg data-component="Octicon" class="octicon octicon-search" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"></path></svg>
+</button>      </div>
+    </div>
+</form>  </div>
+
+  <div id ="primary-content row" class="paper-list">
+    <div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published about 22 hours ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.10894">AlgebraOfGraphics.jl: A Makie-powered algebraic grammar of graphics for Julia</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Julia">Julia</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/jkrumbiegel">
+        <img src="https://github.com/jkrumbiegel.png" width="24" height="24" />
+        @jkrumbiegel
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.10894">10.21105/joss.10894</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 3 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.10123">pwranova: An R package for power analysis of flexible ANOVA designs and related tests</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/R">R</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/mutopsy">
+        <img src="https://github.com/mutopsy.png" width="24" height="24" />
+        @mutopsy
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.10123">10.21105/joss.10123</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 4 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.08384">Litrepl: Literate Paper Processor Promoting Transparency More Than Reproducibility</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Nix">Nix</a></span>
+      <span class="badge-lang"><a href="/papers/in/Vim%20Script">Vim Script</a></span>
+      <span class="badge-lang"><a href="/papers/in/C">C</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/sergei-mironov">
+        <img src="https://github.com/sergei-mironov.png" width="24" height="24" />
+        @sergei-mironov
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.08384">10.21105/joss.08384</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 6 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.10570">Fortitude: The Fortran Linter</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Rust">Rust</a></span>
+      <span class="badge-lang"><a href="/papers/in/Fortran">Fortran</a></span>
+      <span class="badge-lang"><a href="/papers/in/Python">Python</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/LiamPattinson">
+        <img src="https://github.com/LiamPattinson.png" width="24" height="24" />
+        @LiamPattinson
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.10570">10.21105/joss.10570</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 6 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.08598">open_nipals: An sklearn-compatible Python package for NIPALS dimensionality reduction</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Jupyter%20Notebook">Jupyter Notebook</a></span>
+      <span class="badge-lang"><a href="/papers/in/Python">Python</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/nielsschlusser">
+        <img src="https://github.com/nielsschlusser.png" width="24" height="24" />
+        @nielsschlusser
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.08598">10.21105/joss.08598</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 7 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.08992">DL_PY2F: A library for Python-Fortran interoperability</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Python">Python</a></span>
+      <span class="badge-lang"><a href="/papers/in/C">C</a></span>
+      <span class="badge-lang"><a href="/papers/in/C++">C++</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/chemsh">
+        <img src="https://github.com/chemsh.png" width="24" height="24" />
+        @chemsh
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.08992">10.21105/joss.08992</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 8 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.10106">hughes2d: Approximating solutions to the Hughes pedestrian-flow model</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Python">Python</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/TheoRGirard">
+        <img src="https://github.com/TheoRGirard.png" width="24" height="24" />
+        @TheoRGirard
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.10106">10.21105/joss.10106</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 10 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.09923">solana-pqzk-fullchain: Full on-chain verification of ZK-STARK proofs and post-quantum signatures on Solana</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Rust">Rust</a></span>
+      <span class="badge-lang"><a href="/papers/in/TypeScript">TypeScript</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/jotaro-yano">
+        <img src="https://github.com/jotaro-yano.png" width="24" height="24" />
+        @jotaro-yano
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.09923">10.21105/joss.09923</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 14 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.10140">mcdust: A 2D Monte Carlo code for dust coagulation in protoplanetary disks</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Python">Python</a></span>
+      <span class="badge-lang"><a href="/papers/in/Jupyter%20Notebook">Jupyter Notebook</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/vicky1997">
+        <img src="https://github.com/vicky1997.png" width="24" height="24" />
+        @vicky1997
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.10140">10.21105/joss.10140</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 14 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.10229">Uno: a composable framework for nonlinearly constrained optimization</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/C++">C++</a></span>
+      <span class="badge-lang"><a href="/papers/in/AMPL">AMPL</a></span>
+      <span class="badge-lang"><a href="/papers/in/C">C</a></span>
+      <span class="badge-lang"><a href="/papers/in/Fortran">Fortran</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/cvanaret">
+        <img src="https://github.com/cvanaret.png" width="24" height="24" />
+        @cvanaret
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.10229">10.21105/joss.10229</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 15 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.10081">pyROX: Rapid Opacity X-sections</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Python">Python</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/samderegt">
+        <img src="https://github.com/samderegt.png" width="24" height="24" />
+        @samderegt
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.10081">10.21105/joss.10081</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 19 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.09390">Gw-detect-power: A Python Package to Predict the Detectability of Land Management Changes on Freshwater Contaminants Despite Lag.</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Python">Python</a></span>
+      <span class="badge-lang"><a href="/papers/in/Jupyter%20Notebook">Jupyter Notebook</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/hansonmcoombs">
+        <img src="https://github.com/hansonmcoombs.png" width="24" height="24" />
+        @hansonmcoombs
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.09390">10.21105/joss.09390</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 21 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.08830">PLAID: Physics-Learning AI Datamodel</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Python">Python</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/casenave">
+        <img src="https://github.com/casenave.png" width="24" height="24" />
+        @casenave
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.08830">10.21105/joss.08830</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 21 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.10400">MooBench: A micro-benchmark for performance overhead measurement of observability tools</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Gnuplot">Gnuplot</a></span>
+      <span class="badge-lang"><a href="/papers/in/C">C</a></span>
+      <span class="badge-lang"><a href="/papers/in/R">R</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/DaGeRe">
+        <img src="https://github.com/DaGeRe.png" width="24" height="24" />
+        @DaGeRe
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.10400">10.21105/joss.10400</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 22 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.09411">PSD: Parallel Finite Element Solver for Continuum Dynamics</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/M4">M4</a></span>
+      <span class="badge-lang"><a href="/papers/in/GLSL">GLSL</a></span>
+      <span class="badge-lang"><a href="/papers/in/Python">Python</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/mohd-afeef-badri">
+        <img src="https://github.com/mohd-afeef-badri.png" width="24" height="24" />
+        @mohd-afeef-badri
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.09411">10.21105/joss.09411</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 22 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.09003">SlicerNNInteractive: A 3D Slicer extension for nnInteractive</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Python">Python</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/coendevente">
+        <img src="https://github.com/coendevente.png" width="24" height="24" />
+        @coendevente
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.09003">10.21105/joss.09003</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 22 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.10486">OpenReservoirComputing: GPU-Accelerated Reservoir Computing in JAX</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Python">Python</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/Jan-Williams">
+        <img src="https://github.com/Jan-Williams.png" width="24" height="24" />
+        @Jan-Williams
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.10486">10.21105/joss.10486</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 22 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.10072">Sparsity-preserving gradient utility tools for PyTorch</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Python">Python</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/theo-barfoot">
+        <img src="https://github.com/theo-barfoot.png" width="24" height="24" />
+        @theo-barfoot
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.10072">10.21105/joss.10072</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 22 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.10581">pyhctsa: A Python package for highly comparative time-series analysis</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Python">Python</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/joshuabmoore">
+        <img src="https://github.com/joshuabmoore.png" width="24" height="24" />
+        @joshuabmoore
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.10581">10.21105/joss.10581</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paper-card">
+  <div class="row">
+    <div class="col-lg-9">
+      <span class="badge accepted">published</span> <span class="time">Published 27 days ago</span>
+      <h2 class="paper-title"><a href="https://joss.theoj.org/papers/10.21105/joss.06099">faer: A linear algebra library for the Rust programming language</a>
+      </h2>
+      <span class="badge-lang"><a href="/papers/in/Rust">Rust</a></span>
+      <span class="badge-lang"><a href="/papers/in/C++">C++</a></span>
+      <span class="badge-lang"><a href="/papers/in/C">C</a></span>
+    </div>
+    <div class="col-lg-3 paper-meta">
+      <div class="submitted_by">
+        <a target="_blank" href="https://github.com/sarah-ek">
+        <img src="https://github.com/sarah-ek.png" width="24" height="24" />
+        @sarah-ek
+</a>      </div>
+      <div class="doi">
+        <img src="/assets/doi-34e831ee0feecd5b2d879a94d09b7358dd1d15b33bea939ca571aa4b8bb8057b.svg" /><a href="https://joss.theoj.org/papers/10.21105/joss.06099">10.21105/joss.06099</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+  <div class="row">
+    <div class="pagination_helper">
+      <span class="pagy info">Displaying papers <b>1 - 20</b> of <b>3641</b> in total</span>
+    </div>
+    <div class='pagination'><span class='page prev disabled'>&#8592; Previous</span><a href="/papers/published?page=2" aria-label="next">Next &#8594;</a></div>
+  </div>
+</div>
+
+
+  <div class="container-fluid">
+    <div class="row footer">
+  <div class="col-sm-6">
+    <a href="https://opensource.org"><img height="65px" src="/assets/osi-fba45a3fe3a1a7a2aea190b377d03d9ee2471c56d8a38400e50550b239c27b17.png" /></a>
+    <p>Journal of Open Source Software is an <a href="https://opensource.org/affiliates/list">affiliate</a> of the <a href="https://opensource.org">Open Source Initiative</a>.</p>
+  </div>
+
+  <div class="col-sm-6">
+    <a href="https://numfocus.org"><img height="60px" src="/assets/numfocus-7fc6cca1c1f7ce876e711d8b5e847f86dc12cfca0715cbd2ad23e1ef911e14cb.png" /></a>
+    <p>Journal of Open Source Software is part of <a href="http://www.theoj.org/">Open Journals</a>, which is a <a href="https://www.numfocus.org/open-source-projects/">NumFOCUS-sponsored project</a>.</p>
+  </div>
+</div>
+
+<div class="row cc">
+  <img height="48px" src="/assets/cc-logo-6bd73c91b31e18e58c9d77aae34fac59234b70adf38e1d7113532cfdec98ab00.svg" />
+  <p>
+    <a href="/toc">Table of Contents</a>
+    <br>Public user content licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> unless otherwise specified.
+    <br>ISSN 2475-9066
+  </p>
+</div>
+
+  </div>
+</body>
+</html>

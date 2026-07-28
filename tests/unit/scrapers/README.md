@@ -1,0 +1,1 @@
+The sample .html file where the requests are made is provided in joss.html. We build our scrapers on this structure. 
