@@ -4,6 +4,8 @@
 from __future__ import annotations
 import argparse
 import sys
+import time
+from datetime import datetime
 from typing import List, Set, Tuple
 
 from .config import GITHUB_TOKEN
@@ -32,12 +34,18 @@ def scrape(
         None
     """
     seen: Set[Tuple[str, str, str, str]] = set()
+    startTime = time.perf_counter()
 
     if "published" in statuses:
         pub = PublishedScraper(politeness_sleep=politeness_sleep)
         for paper_url in pub.iter_paper_urls(max_pages=max_pages_published):
             try:
                 rec = pub.parse_paper(paper_url)
+                sub_date = datetime.strptime(rec.submission_date,"%d.%m.%Y")
+                pub_date = datetime.strptime(rec.publication_date,"%d.%m.%Y")
+                if (sub_date >= pub_date):
+                    print(f"[warn] Potentially inconsistent submission {sub_date} and publication {pub_date} date for paper {paper_url}", file=sys.stderr)
+
                 key = ("published", rec.paper_url or "", "", rec.repo_url or "")
                 if key not in seen:
                     seen.add(key)
@@ -67,6 +75,12 @@ def scrape(
                         writer.add(rec)
                 except Exception as e:  # pylint: disable=broad-exception-caught,invalid-name
                     print(f"[warn] accepted(HTML) parse failed {issue_url}: {e}", file=sys.stderr)
+
+    seconds = time.perf_counter() - startTime
+    minutes = seconds / 60
+    hours = minutes / 60
+    print(f"[info] Scraped information of {len(seen)} papers.")
+    print(f"[info] Scraping took {seconds:.4f} sec. / {minutes:.4f} min. / {hours:.4f} h.")
 
 
 def parse_args() -> argparse.Namespace:
