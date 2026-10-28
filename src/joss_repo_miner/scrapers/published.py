@@ -111,7 +111,12 @@ class PublishedScraper:
             repo_url = extract_repo_href(html)
 
         # Check if the repository is accessible
-        status_code = http_get(repo_url).status_code
+        status_code = None
+        if repo_url:
+            try:
+                status_code = http_get(repo_url).status_code
+            except Exception:
+                status_code = None
 
         submission_label = soup.find("span",
             string=lambda s: isinstance(s, str) and s.startswith("Submitted ")).get_text(strip=True)
