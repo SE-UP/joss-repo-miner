@@ -11,6 +11,7 @@ import time
 from typing import Iterable, Set, Optional
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 from ..config import BASE_JOSS
 from ..utils.http import http_get
@@ -110,7 +111,20 @@ class PublishedScraper:
             repo_url = extract_repo_href(html)
 
         # Check if the repository is accessible
-        status_code = http_get(repo_url).status_code
+        status_code = None
+        if repo_url:
+            try:
+                status_code = http_get(repo_url).status_code
+            except Exception:
+                status_code = None
+
+        submission_label = soup.find("span",
+            string=lambda s: isinstance(s, str) and s.startswith("Submitted ")).get_text(strip=True)
+        submission_date_string = submission_label.replace("Submitted ", "")
+
+        publication_label = soup.find("span",
+            string=lambda s: isinstance(s, str) and s.startswith("Published ")).get_text(strip=True)
+        publication_date_string = publication_label.replace("Published ", "")
 
         return Record(
             status="published",
@@ -120,5 +134,7 @@ class PublishedScraper:
             joss_id=joss_id,
             title=title,
             repo_url=repo_url,
-            repo_status_code=status_code
+            repo_status_code=status_code,
+            submission_date=datetime.strptime(submission_date_string,"%d %B %Y").strftime("%d.%m.%Y"),
+            publication_date=datetime.strptime(publication_date_string,"%d %B %Y").strftime("%d.%m.%Y")
         )

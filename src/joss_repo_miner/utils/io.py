@@ -26,6 +26,8 @@ class Record:
         title (Optional[str]): The full textual title of the software submission.
         repo_url (Optional[str]): The targeted third-party open-source codebase repository URL.
         repo_status_code (int): The HTTP responses integer status code when checking the repo URL.
+        submission_date (str): The date of submission.
+        publication_date (str): The date of publication.
         created_at (Optional[str]): The timestamp tracking creation of the underlying record.
     """
 
@@ -37,6 +39,8 @@ class Record:
     title: Optional[str]
     repo_url: Optional[str]
     repo_status_code: int = None
+    submission_date: str = ""
+    publication_date: str = ""
     created_at: Optional[str] = None  # kept as str; we'll normalize on write
 
 
@@ -94,6 +98,8 @@ class CsvWriter:
             "title",
             "repo_url",
             "repo_status_code",
+            "submission_date",
+            "publication_date",
             "created_at",
         ]
         with open(self.out_file, "w", newline="", encoding="utf-8") as f:
@@ -121,6 +127,8 @@ class CsvWriter:
                 "title",
                 "repo_url",
                 "repo_status_code",
+                "submission_date",
+                "publication_date",
                 "created_at",
             ]
         }
